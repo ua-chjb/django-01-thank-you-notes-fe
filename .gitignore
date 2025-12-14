@@ -1,0 +1,18 @@
+# Dependencies
+/node_modules
+
+# Build/Generated Files (Vite's Output)
+/dist
+.vite/
+stats.html # If using bundle analysis tools
+
+# Environment and Logs
+.env
+.env.*
+npm-debug.log
+yarn-error.log
+
+# OS and Editor Specific Files
+.DS_Store # Mac OS
+/build # For standard React projects (though you use /dist)
+.vscode/ # VS Code workspace/settings
