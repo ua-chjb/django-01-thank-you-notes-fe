@@ -14,6 +14,7 @@ import { HomeIcon, PlusIcon, GiftIcon } from './components/Icons';
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentView, setCurrentView] = useState('login');
+  const [authChecked, setAuthChecked] = useState(false);
   const [posts, setPosts] = useState([]);
   const [selectedPost, setSelectedPost] = useState(null);
   const [currentUser, setCurrentUser] = useState(null);
@@ -119,6 +120,9 @@ function App() {
     if (!accessToken || !refreshToken) {
       setIsLoggedIn(false);
       setCurrentView("login");
+      if (!authChecked) {
+        return null
+      }
       return
     }
 
