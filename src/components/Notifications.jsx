@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { getNotifications, markNotificationRead, deleteNotification, followUser, S3_BASE_URL } from '../utils/api';
 import { motion, useMotionValue, animate } from 'framer-motion';
-import { S3_BASE_URL } from '../utils/api';
 
 function Notifications({ onNavigate, onSelectPost, onNavigateToUserProfile }) {
   const [notifications, setNotifications] = useState([]);

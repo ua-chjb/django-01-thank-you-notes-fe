@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
-import { getUserProfile, followUser, S3_BASE_URL } from '../utils/api';
+import { getUserProfile, followUser, API_URL, S3_BASE_URL } from '../utils/api';
 import { BackIcon, UserIcon, CheckIcon, ArrowIcon, CircleIcon, MoreIcon } from './Icons';
-import { API_URL, S3_BASE_URL } from '../utils/api';
 
 function UserProfile({ username, onBack, onSelectPost, onNavigateToUser }) {
   const [profileData, setProfileData] = useState(null);

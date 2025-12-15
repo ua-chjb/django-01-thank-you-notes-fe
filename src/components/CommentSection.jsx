@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { createComment, updateComment, deleteComment, likeComment, S3_BASE_URL } from '../utils/api';
+import { createComment, updateComment, deleteComment, likeComment } from '../utils/api';
 import { HeartIcon, TrashIcon, EditIcon } from './Icons';
 import { API_URL, S3_BASE_URL } from '../utils/api';
 

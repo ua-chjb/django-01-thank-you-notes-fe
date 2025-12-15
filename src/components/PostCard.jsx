@@ -3,7 +3,6 @@ import { HeartIcon, CommentIcon, CheckIcon, ArrowIcon, CircleIcon } from './Icon
 import { likePost, S3_BASE_URL } from '../utils/api';
 import LikeAvatars from './LikeAvatars';
 import CommentSection from './CommentSection';
-import { S3_BASE_URL } from '../utils/api';
 
 function PostCard({ post, currentUser, onSelectPost, onUpdate, onNavigateToUserProfile, onNavigateToStatus }) {
 	const [isLiking, setIsLiking] = useState(false);

@@ -2,7 +2,7 @@ import { useState, useMemo } from 'react';
 import { UserIcon } from './Icons';
 import PostCard from './PostCard';
 import FilterChips from './FilterChips';
-import { API_URL, S3_BASE_URL } from '../utils/api';
+import { S3_BASE_URL } from '../utils/api';
 
 function HomeFeed({ posts, currentUser, onSelectPost, onNavigate, onUpdate, onNavigateToUserProfile }) {
 
