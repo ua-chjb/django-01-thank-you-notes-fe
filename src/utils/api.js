@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API_URL = "https://thankyounotes.today";
-fetch(`${API_URL}/api/endpoint/`)
+fetch(`${API_URL}`)
 
 const api = axios.create({
   baseURL: API_URL
