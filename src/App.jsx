@@ -135,7 +135,7 @@ function App() {
         loadPosts();
         loadUnreadNotificationsCount();
       })
-      .catch(() => {
+      .catch((error) => {
         console.error("Auth check failed:", error);
         setIsLoggedIn(false);
         setCurrentView("login");
