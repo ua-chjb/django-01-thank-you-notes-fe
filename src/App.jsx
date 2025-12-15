@@ -112,6 +112,29 @@ function App() {
     }
   }, [posts]);
 
+  useEffect(() => {
+    const accessToken = localStorage.getItem("access_token")
+    const refreshToken = localStorage.getItem("refresh_token")
+
+    if (!accessToken || !refreshToken) {
+      setIsLoggedIn(false);
+      setCurrentView("login");
+      return
+    }
+
+    getCurrentUser()
+      .then(() => {
+        setIsLoggedIn(true);
+        setCurrentView("home");
+        loadPosts();
+        loadUnreadNotificationsCount();
+      })
+      .catch(() => {
+        setIsLoggedIn(false);
+        setCurrentView("login");
+      })
+  }, []);
+
   const handleNavigateToUserProfile = (username) => {
     // If viewing own profile, go to the "profile" view instead
     if (currentUser && username === currentUser.username) {
