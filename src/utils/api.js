@@ -7,6 +7,8 @@ const api = axios.create({
   baseURL: API_URL
 });
 
+export const S3_BASE_URL = "https://django-01-tyn-s3.s3.us-west-1.amazonaws.com/media/"
+
 // Request interceptor - add token to requests
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem("access_token");

@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
-import { getPostLikes } from '../utils/api';
+import { getPostLikes, S3_BASE_URL } from '../utils/api';
 import LikersModal from './LikersModal';
-import { API_URL } from '../utils/api';
 
 function LikeAvatars({ postId, likeCount, onNavigateToProfile }) {
 	const [showModal, setShowModal] = useState(false);
@@ -60,7 +59,7 @@ function LikeAvatars({ postId, likeCount, onNavigateToProfile }) {
 								<img 
 									src={user.profile_picture.startsWith('http') 
 										? user.profile_picture 
-										: `${API_URL}${user.profile_picture}`
+										: `${S3_BASE_URL}${user.profile_picture}`
 									}
 									alt={user.username}
 									className="w-full h-full object-cover"

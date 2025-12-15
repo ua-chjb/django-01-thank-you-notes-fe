@@ -2,7 +2,7 @@ import { useState, useMemo } from 'react';
 import { UserIcon } from './Icons';
 import PostCard from './PostCard';
 import FilterChips from './FilterChips';
-import { API_URL } from '../utils/api';
+import { API_URL, S3_BASE_URL } from '../utils/api';
 
 function HomeFeed({ posts, currentUser, onSelectPost, onNavigate, onUpdate, onNavigateToUserProfile }) {
 
@@ -28,7 +28,7 @@ function HomeFeed({ posts, currentUser, onSelectPost, onNavigate, onUpdate, onNa
 						<img 
 							src={currentUser.profile_picture.startsWith('http') 
 								? currentUser.profile_picture 
-								: `${API_URL}${currentUser.profile_picture}`
+								: `${S3_BASE_URL}${currentUser.profile_picture}`
 							}
 							alt={currentUser.username}
 							className="w-full h-full object-cover"

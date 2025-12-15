@@ -1,6 +1,6 @@
 import { useRef, useEffect } from 'react';
 import { UserIcon } from './Icons';
-import { API_URL } from '../utils/api';
+import { S3_BASE_URL } from '../utils/api';
 
 function LikersModal({ likers, onClose, onNavigateToProfile }) {
 	const modalRef = useRef(null);
@@ -68,7 +68,7 @@ function LikersModal({ likers, onClose, onNavigateToProfile }) {
 											<img 
 												src={user.profile_picture.startsWith('http') 
 													? user.profile_picture 
-													: `${API_URL}${user.profile_picture}`
+													: `${S3_BASE_URL}${user.profile_picture}`
 												}
 												alt={user.username}
 												className="w-full h-full object-cover"

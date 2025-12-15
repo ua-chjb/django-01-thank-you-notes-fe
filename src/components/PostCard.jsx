@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { HeartIcon, CommentIcon, CheckIcon, ArrowIcon, CircleIcon } from './Icons';
-import { likePost } from '../utils/api';
+import { likePost, S3_BASE_URL } from '../utils/api';
 import LikeAvatars from './LikeAvatars';
 import CommentSection from './CommentSection';
-import { API_URL } from '../utils/api';
+import { S3_BASE_URL } from '../utils/api';
 
 function PostCard({ post, currentUser, onSelectPost, onUpdate, onNavigateToUserProfile, onNavigateToStatus }) {
 	const [isLiking, setIsLiking] = useState(false);
@@ -58,7 +58,7 @@ function PostCard({ post, currentUser, onSelectPost, onUpdate, onNavigateToUserP
 							<img 
 								src={post.author.profile_picture.startsWith('http') 
 									? post.author.profile_picture 
-									: `${API_URL}${post.author.profile_picture}`
+									: `${S3_BASE_URL}${post.author.profile_picture}`
 								}
 								alt={post.author.username}
 								className="w-full h-full object-cover"
@@ -121,7 +121,7 @@ function PostCard({ post, currentUser, onSelectPost, onUpdate, onNavigateToUserP
 						<img 
 							src={post.gift_image.startsWith('http') 
 								? post.gift_image 
-								: `${API_URL}${post.gift_image}`
+								: `${S3_BASE_URL}${post.gift_image}`
 							}
 							alt={post.what}
 							className="w-full h-auto object-cover"

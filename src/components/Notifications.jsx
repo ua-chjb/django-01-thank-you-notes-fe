@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
-import { getNotifications, markNotificationRead, deleteNotification, followUser } from '../utils/api';
+import { getNotifications, markNotificationRead, deleteNotification, followUser, S3_BASE_URL } from '../utils/api';
 import { motion, useMotionValue, animate } from 'framer-motion';
-import { API_URL } from '../utils/api';
+import { S3_BASE_URL } from '../utils/api';
 
 function Notifications({ onNavigate, onSelectPost, onNavigateToUserProfile }) {
   const [notifications, setNotifications] = useState([]);
@@ -262,7 +262,7 @@ function NotificationItem({
               <img 
                 src={notification.sender.profile_picture.startsWith('http') 
                   ? notification.sender.profile_picture 
-                  : `${API_URL}${notification.sender.profile_picture}`
+                  : `${S3_BASE_URL}${notification.sender.profile_picture}`
                 }
                 alt={notification.sender.username}
                 className="w-full h-full object-cover"
@@ -312,7 +312,7 @@ function NotificationItem({
                   <img 
                     src={postImage.startsWith('http') 
                       ? postImage 
-                      : `https://thankyounotes.today/${postImage}`
+                      : `${S3_BASE_URL}${postImage}`
                     }
                     alt="Post"
                     className="w-full h-full object-cover"
