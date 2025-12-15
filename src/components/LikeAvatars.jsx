@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { getPostLikes } from '../utils/api';
 import LikersModal from './LikersModal';
+import { API_URL } from '../utils/api';
 
 function LikeAvatars({ postId, likeCount, onNavigateToProfile }) {
 	const [showModal, setShowModal] = useState(false);

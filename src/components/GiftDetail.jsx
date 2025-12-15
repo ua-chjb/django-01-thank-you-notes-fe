@@ -3,6 +3,7 @@ import { BackIcon, CameraIcon, EditIcon, MoreIcon, TrashIcon, CheckIcon, ArrowIc
 import { motion, useMotionValue, useTransform, animate} from 'framer-motion';
 import { updatePost, deletePost, likePost, API_URL } from '../utils/api';
 import CommentSection from './CommentSection';
+import { API_URL } from '../utils/api';
 
 function GiftDetail({ gift, currentUser, onBack, onStatusClick, onUpdate }) {
 

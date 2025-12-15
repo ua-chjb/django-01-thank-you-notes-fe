@@ -1,5 +1,6 @@
 import { useRef, useEffect } from 'react';
 import { UserIcon } from './Icons';
+import { API_URL } from '../utils/api';
 
 function LikersModal({ likers, onClose, onNavigateToProfile }) {
 	const modalRef = useRef(null);

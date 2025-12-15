@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { API_URL } from '../utils/api';
 
 function LoginForm({ onLoginSuccess, onSwitchToRegister }) {
   const [username, setUsername] = useState('');

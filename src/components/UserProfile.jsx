@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { getUserProfile, followUser } from '../utils/api';
 import { BackIcon, UserIcon, CheckIcon, ArrowIcon, CircleIcon, MoreIcon } from './Icons';
+import { API_URL } from '../utils/api';
 
 function UserProfile({ username, onBack, onSelectPost, onNavigateToUser }) {
   const [profileData, setProfileData] = useState(null);

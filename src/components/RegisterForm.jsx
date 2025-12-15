@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { register, login } from '../utils/api';
 import { GiftIcon } from './Icons';
+import { API_URL } from '../utils/api';
 
 function RegisterForm({ onRegisterSuccess, onSwitchToLogin }) {
   const [formData, setFormData] = useState({
