@@ -12,9 +12,9 @@ import { getHomeFeed, getCurrentUser, getNotifications } from './utils/api';
 import { HomeIcon, PlusIcon, GiftIcon } from './components/Icons';
 
 function App() {
+  const [isLoading, setIsLoading] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentView, setCurrentView] = useState('login');
-  const [authChecked, setAuthChecked] = useState(false);
   const [posts, setPosts] = useState([]);
   const [selectedPost, setSelectedPost] = useState(null);
   const [currentUser, setCurrentUser] = useState(null);
@@ -113,6 +113,7 @@ function App() {
     }
   }, [posts]);
 
+  // authentication check
   useEffect(() => {
     const accessToken = localStorage.getItem("access_token")
     const refreshToken = localStorage.getItem("refresh_token")
@@ -120,22 +121,27 @@ function App() {
     if (!accessToken || !refreshToken) {
       setIsLoggedIn(false);
       setCurrentView("login");
-      if (!authChecked) {
-        return null
-      }
+      setIsLoading(false);
       return
     }
 
     getCurrentUser()
-      .then(() => {
+      .then((response) => {
+        const userData = response.data;
+        setCurrentUser(userData);
+        localStorage.setItem("user", JSON.stringify(userData));
         setIsLoggedIn(true);
         setCurrentView("home");
         loadPosts();
-        loadUnreadNotificationsCount();
+        loadUnreadNotificationsCount()
       })
       .catch(() => {
+        console.error("Auth check failed:", error);
         setIsLoggedIn(false);
         setCurrentView("login");
+      })
+      .finally(() => {
+        setIsLoading(false);
       })
   }, []);
 
