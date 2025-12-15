@@ -59,7 +59,7 @@ function LikeAvatars({ postId, likeCount, onNavigateToProfile }) {
 								<img 
 									src={user.profile_picture.startsWith('http') 
 										? user.profile_picture 
-										: `https://thankyounotes.today${user.profile_picture}`
+										: `${API_URL}${user.profile_picture}`
 									}
 									alt={user.username}
 									className="w-full h-full object-cover"

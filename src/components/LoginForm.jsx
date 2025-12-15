@@ -12,7 +12,7 @@ function LoginForm({ onLoginSuccess, onSwitchToRegister }) {
     setIsLoading(true);
 
     try {
-      const response = await fetch('https://thankyounotes.today/token/', {
+      const response = await fetch(`${API_URL}/token/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

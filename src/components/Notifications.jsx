@@ -261,7 +261,7 @@ function NotificationItem({
               <img 
                 src={notification.sender.profile_picture.startsWith('http') 
                   ? notification.sender.profile_picture 
-                  : `https://thankyounotes.today/${notification.sender.profile_picture}`
+                  : `${API_URL}${notification.sender.profile_picture}`
                 }
                 alt={notification.sender.username}
                 className="w-full h-full object-cover"

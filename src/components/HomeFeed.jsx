@@ -27,7 +27,7 @@ function HomeFeed({ posts, currentUser, onSelectPost, onNavigate, onUpdate, onNa
 						<img 
 							src={currentUser.profile_picture.startsWith('http') 
 								? currentUser.profile_picture 
-								: `https://thankyounotes.today/${currentUser.profile_picture}`
+								: `${API_URL}${currentUser.profile_picture}`
 							}
 							alt={currentUser.username}
 							className="w-full h-full object-cover"

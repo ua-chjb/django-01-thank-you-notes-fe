@@ -80,7 +80,7 @@ function UserProfile({ username, onBack, onSelectPost, onNavigateToUser }) {
   const loadFollowers = async () => {
     setFollowersLoading(true);
     try {
-      const response = await fetch(`https://thankyounotes.today/users/${username}/followers/`, {
+      const response = await fetch(`${API_URL}/users/${username}/followers/`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('access_token')}`
         }
@@ -97,7 +97,7 @@ function UserProfile({ username, onBack, onSelectPost, onNavigateToUser }) {
   const loadFollowing = async () => {
     setFollowingLoading(true);
     try {
-      const response = await fetch(`https://thankyounotes.today/users/${username}/following/`, {
+      const response = await fetch(`${API_URL}/users/${username}/following/`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('access_token')}`
         }
@@ -164,7 +164,7 @@ function UserProfile({ username, onBack, onSelectPost, onNavigateToUser }) {
               <img 
                 src={profileData.profile_picture.startsWith('http') 
                   ? profileData.profile_picture 
-                  : `https://thankyounotes.today/${profileData.profile_picture}`
+                  : `${API_URL}${profileData.profile_picture}`
                 }
                 alt={profileData.username}
                 className="w-full h-full object-cover"
@@ -301,7 +301,7 @@ function UserProfile({ username, onBack, onSelectPost, onNavigateToUser }) {
                   {post.gift_image && (
                     <div className="w-full mb-4 rounded-xl overflow-hidden shadow-sm bg-gray-100">
                       <img 
-                        src={post.gift_image.startsWith('http') ? post.gift_image : `https://thankyounotes.today/${post.gift_image}`}
+                        src={post.gift_image.startsWith('http') ? post.gift_image : `${API_URL}${post.gift_image}`}
                         alt={post.what}
                         className="w-full h-auto object-cover"
                       />
@@ -348,7 +348,7 @@ function UserProfile({ username, onBack, onSelectPost, onNavigateToUser }) {
                     <div className="w-12 h-12 rounded-full overflow-hidden bg-gray-200 flex-shrink-0">
                       {user.profile_picture ? (
                         <img 
-                          src={user.profile_picture.startsWith('http') ? user.profile_picture : `https://thankyounotes.today/${user.profile_picture}`}
+                          src={user.profile_picture.startsWith('http') ? user.profile_picture : `${API_URL}${user.profile_picture}`}
                           alt={user.username}
                           className="w-full h-full object-cover"
                         />
@@ -408,7 +408,7 @@ function UserProfile({ username, onBack, onSelectPost, onNavigateToUser }) {
                     <div className="w-12 h-12 rounded-full overflow-hidden bg-gray-200 flex-shrink-0">
                       {user.profile_picture ? (
                         <img 
-                          src={user.profile_picture.startsWith('http') ? user.profile_picture : `https://thankyounotes.today/${user.profile_picture}`}
+                          src={user.profile_picture.startsWith('http') ? user.profile_picture : `${API_URL}${user.profile_picture}`}
                           alt={user.username}
                           className="w-full h-full object-cover"
                         />

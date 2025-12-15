@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { createComment, updateComment, deleteComment, likeComment } from '../utils/api';
 import { HeartIcon, TrashIcon, EditIcon } from './Icons';
+import { API_URL } from '../utils/api';
+
 
 function CommentSection({ postId, postAuthorId, currentUser, initialComments = [], onUpdate }) {
 	const [comments, setComments] = useState(initialComments);
@@ -92,7 +94,7 @@ function CommentSection({ postId, postAuthorId, currentUser, initialComments = [
 									<img 
 										src={comment.author.profile_picture.startsWith('http') 
 											? comment.author.profile_picture 
-											: `https://thankyounotes.today${comment.author.profile_picture}`
+											: `${API_URL}${comment.author.profile_picture}`
 										}
 										alt={comment.author.username}
 										className="w-full h-full object-cover"

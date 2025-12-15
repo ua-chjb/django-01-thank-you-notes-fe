@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react';
 import { CheckIcon, ArrowIcon, CircleIcon, UserIcon, GiftIcon } from './Icons';
+import { API_URL } from '../utils/api';
 
 function Profile({ posts, currentUser, onLogout, onNavigate, onSelectPost, onUserUpdate, onNavigateToUserProfile }) {
   const fileInputRef = useRef(null);
@@ -49,7 +50,7 @@ function Profile({ posts, currentUser, onLogout, onNavigate, onSelectPost, onUse
       formData.append('profile_picture', file);
 
       const token = localStorage.getItem('access_token');
-      const response = await fetch('https://thankyounotes.today/update_user/', {
+      const response = await fetch(`${API_URL}/update_user/`, {
         method: 'PUT',
         headers: {
           'Authorization': `Bearer ${token}`
@@ -75,7 +76,7 @@ function Profile({ posts, currentUser, onLogout, onNavigate, onSelectPost, onUse
   const loadFollowers = async () => {
     setFollowersLoading(true);
     try {
-      const response = await fetch(`https://thankyounotes.today/users/${currentUser.username}/followers/`, {
+      const response = await fetch(`${API_URL}/users/${currentUser.username}/followers/`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('access_token')}`
         }
@@ -92,7 +93,7 @@ function Profile({ posts, currentUser, onLogout, onNavigate, onSelectPost, onUse
   const loadFollowing = async () => {
     setFollowingLoading(true);
     try {
-      const response = await fetch(`https://thankyounotes.today/users/${currentUser.username}/following/`, {
+      const response = await fetch(`${API_URL}/users/${currentUser.username}/following/`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('access_token')}`
         }
@@ -114,7 +115,7 @@ function Profile({ posts, currentUser, onLogout, onNavigate, onSelectPost, onUse
   const profilePicture = currentUser?.profile_picture 
     ? (currentUser.profile_picture.startsWith('http') 
       ? currentUser.profile_picture 
-      : `https://thankyounotes.today${currentUser.profile_picture}`)
+      : `${API_URL}${currentUser.profile_picture}`)
     : null;
 
   return (
@@ -269,7 +270,7 @@ function Profile({ posts, currentUser, onLogout, onNavigate, onSelectPost, onUse
                   {post.gift_image && (
                     <div className="w-full mb-4 rounded-xl overflow-hidden shadow-sm bg-gray-100">
                       <img 
-                        src={post.gift_image.startsWith('http') ? post.gift_image : `https://thankyounotes.today${post.gift_image}`}
+                        src={post.gift_image.startsWith('http') ? post.gift_image : `${API_URL}${post.gift_image}`}
                         alt={post.what}
                         className="w-full h-auto object-cover"
                       />
@@ -328,7 +329,7 @@ function Profile({ posts, currentUser, onLogout, onNavigate, onSelectPost, onUse
                     <div className="w-12 h-12 rounded-full overflow-hidden bg-gray-200 flex-shrink-0">
                       {user.profile_picture ? (
                         <img 
-                          src={user.profile_picture.startsWith('http') ? user.profile_picture : `https://thankyounotes.today/${user.profile_picture}`}
+                          src={user.profile_picture.startsWith('http') ? user.profile_picture : `${API_URL}${user.profile_picture}`}
                           alt={user.username}
                           className="w-full h-full object-cover"
                         />
@@ -388,7 +389,7 @@ function Profile({ posts, currentUser, onLogout, onNavigate, onSelectPost, onUse
                     <div className="w-12 h-12 rounded-full overflow-hidden bg-gray-200 flex-shrink-0">
                       {user.profile_picture ? (
                         <img 
-                          src={user.profile_picture.startsWith('http') ? user.profile_picture : `https://thankyounotes.today${user.profile_picture}`}
+                          src={user.profile_picture.startsWith('http') ? user.profile_picture : `${API_URL}${user.profile_picture}`}
                           alt={user.username}
                           className="w-full h-full object-cover"
                         />

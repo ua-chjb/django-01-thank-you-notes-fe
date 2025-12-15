@@ -39,7 +39,7 @@ function RegisterForm({ onRegisterSuccess, onSwitchToLogin }) {
       localStorage.setItem('refresh_token', loginResponse.data.refresh);
       
       // Fetch and store user profile
-      const userResponse = await fetch('https://thankyounotes.today/my_profile/', {
+      const userResponse = await fetch(`${API_URL}/my_profile/`, {
         headers: {
           'Authorization': `Bearer ${loginResponse.data.access}`
         }

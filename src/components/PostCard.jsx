@@ -57,7 +57,7 @@ function PostCard({ post, currentUser, onSelectPost, onUpdate, onNavigateToUserP
 							<img 
 								src={post.author.profile_picture.startsWith('http') 
 									? post.author.profile_picture 
-									: `https://thankyounotes.today${post.author.profile_picture}`
+									: `${API_URL}${post.author.profile_picture}`
 								}
 								alt={post.author.username}
 								className="w-full h-full object-cover"
@@ -120,7 +120,7 @@ function PostCard({ post, currentUser, onSelectPost, onUpdate, onNavigateToUserP
 						<img 
 							src={post.gift_image.startsWith('http') 
 								? post.gift_image 
-								: `https://thankyounotes.today${post.gift_image}`
+								: `${API_URL}${post.gift_image}`
 							}
 							alt={post.what}
 							className="w-full h-auto object-cover"

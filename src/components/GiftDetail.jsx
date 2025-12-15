@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { BackIcon, CameraIcon, EditIcon, MoreIcon, TrashIcon, CheckIcon, ArrowIcon, CircleIcon, HeartIcon, CommentIcon } from './Icons';
 import { motion, useMotionValue, useTransform, animate} from 'framer-motion';
-import { updatePost, deletePost, likePost } from '../utils/api';
+import { updatePost, deletePost, likePost, API_URL } from '../utils/api';
 import CommentSection from './CommentSection';
 
 function GiftDetail({ gift, currentUser, onBack, onStatusClick, onUpdate }) {
@@ -178,7 +178,7 @@ function GiftDetail({ gift, currentUser, onBack, onStatusClick, onUpdate }) {
 		
 		try {
 			const token = localStorage.getItem('access_token');
-			const response = await fetch(`https://thankyounotes.today/posts/update/${gift.id}/`, {
+			const response = await fetch(`${API_URL}/posts/update/${gift.id}/`, {
 				method: 'PUT',
 				headers: {
 					'Authorization': `Bearer ${token}`,
@@ -338,7 +338,7 @@ function GiftDetail({ gift, currentUser, onBack, onStatusClick, onUpdate }) {
 			if (gift.status) formData.append('status', gift.status);
 
 			const token = localStorage.getItem('access_token');
-			const response = await fetch(`https://thankyounotes.today/posts/update/${gift.id}/`, {
+			const response = await fetch(`${API_URL}/posts/update/${gift.id}/`, {
 				method: 'PUT',
 				headers: {
 					'Authorization': `Bearer ${token}`
@@ -459,7 +459,7 @@ function GiftDetail({ gift, currentUser, onBack, onStatusClick, onUpdate }) {
 								<img 
 									src={gift.author.profile_picture.startsWith('http') 
 										? gift.author.profile_picture 
-										: `https://thankyounotes.today/${gift.author.profile_picture}`
+										: `${API_URL}${gift.author.profile_picture}`
 									}
 									alt={gift.author.username}
 									className="w-full h-full object-cover"
@@ -583,7 +583,7 @@ function GiftDetail({ gift, currentUser, onBack, onStatusClick, onUpdate }) {
 													className="relative bg-white cursor-pointer select-none"
 												>
 													<img 
-														src={gift.gift_image.startsWith('http') ? gift.gift_image : `https://thankyounotes.today/${gift.gift_image}`}
+														src={gift.gift_image.startsWith('http') ? gift.gift_image : `${API_URL}${gift.gift_image}`}
 														alt={gift.what}
 														className="w-full h-auto object-cover pointer-events-none"
 														draggable="false"
@@ -643,7 +643,7 @@ function GiftDetail({ gift, currentUser, onBack, onStatusClick, onUpdate }) {
 					{!isOwnPost && gift.gift_image && (
 						<div className="w-full mb-4 rounded-xl overflow-hidden shadow-sm">
 							<img 
-								src={gift.gift_image.startsWith('http') ? gift.gift_image : `https://thankyounotes.today/${gift.gift_image}`}
+								src={gift.gift_image.startsWith('http') ? gift.gift_image : `${API_URL}${gift.gift_image}`}
 								alt={gift.what}
 								className="w-full h-auto object-cover"
 							/>

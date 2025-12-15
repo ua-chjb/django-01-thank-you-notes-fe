@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "https://thankyounotes.today";
+export const API_URL = "https://api.thankyounotes.today";
 fetch(`${API_URL}`)
 
 const api = axios.create({
