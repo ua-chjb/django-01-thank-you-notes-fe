@@ -324,7 +324,8 @@ function StatusToggle({ gift, onBack, onUpdate }) {
                 className={`w-full relative h-16 rounded-full overflow-hidden ${isWritten && !isDraggingWritten ? getBackgroundStyle(0, null, true) : 'bg-gradient-to-r from-gray-300 to-gray-400'}`}
                 style={{ 
                   backgroundColor: getBackgroundColor(writtenDragX, writtenTrackRef, isWritten, isDraggingWritten),
-                  transition: isDraggingWritten ? 'none' : 'background-color 0.3s'
+                  transition: isDraggingWritten ? 'none' : 'background-color 0.3s',
+                  touchAction: "none"
                 }}
                 onTouchStart={handleWrittenTouchStart}
                 onTouchMove={handleWrittenTouchMove}
@@ -394,7 +395,8 @@ function StatusToggle({ gift, onBack, onUpdate }) {
                 className={`w-full relative h-16 rounded-full overflow-hidden ${isSent && !isDraggingSent ? getBackgroundStyle(0, null, true) : 'bg-gradient-to-r from-gray-300 to-gray-400'}`}
                 style={{ 
                   backgroundColor: getBackgroundColor(sentDragX, sentTrackRef, isSent, isDraggingSent),
-                  transition: isDraggingSent ? 'none' : 'background-color 0.3s'
+                  transition: isDraggingSent ? 'none' : 'background-color 0.3s',
+                  touchAction: "none"
                 }}
                 onTouchStart={handleSentTouchStart}
                 onTouchMove={handleSentTouchMove}
@@ -433,8 +435,6 @@ function StatusToggle({ gift, onBack, onUpdate }) {
             )}
           </div>
         </div>
-
-        
       </div>
     </div>
   );
