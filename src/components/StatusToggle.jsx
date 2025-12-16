@@ -47,7 +47,7 @@ function StatusToggle({ gift, onBack, onUpdate }) {
     // 🔴 CRITICAL FIX: Deferred Activation
     // Wrap the state update in setTimeout(..., 0) to push the confetti activation 
     // to the next execution cycle. This ensures that all synchronous and 
-    // asynchronous state updates from handleSentTouchEnd have completed their 
+    // asynchronous state updates from handleSentPointerUp have completed their 
     // render batch before the Confetti component attempts its side effect, 
     // resolving the race condition that caused the double-fire and cut-off.
     setTimeout(() => {
@@ -100,10 +100,16 @@ function StatusToggle({ gift, onBack, onUpdate }) {
     setIsUpdating(false);
   };
 
-  // Mobile drag handlers for "Written"
-  const handleWrittenTouchStart = (e) => {
+  // --------------------------------------------------------
+  // Mobile POINTER handlers for "Written" (Fixes Touch Lag)
+  // --------------------------------------------------------
+  const handleWrittenPointerDown = (e) => {
     if (!isMobile) return;
     e.preventDefault();
+    
+    // CRITICAL: Lock pointer to element for instant response
+    e.currentTarget.setPointerCapture(e.pointerId);
+    
     setIsDraggingWritten(true);
     
     if (isWritten && writtenTrackRef.current) {
@@ -114,24 +120,30 @@ function StatusToggle({ gift, onBack, onUpdate }) {
     }
   };
 
-  const handleWrittenTouchMove = (e) => {
+  const handleWrittenPointerMove = (e) => {
     if (!isDraggingWritten || !writtenTrackRef.current) return;
     e.preventDefault();
     
-    const touch = e.touches[0];
+    // Pointer events use e.clientX directly (no touches array)
+    const clientX = e.clientX;
     const trackRect = writtenTrackRef.current.getBoundingClientRect();
     const thumbWidth = 60;
     const maxDrag = trackRect.width - thumbWidth;
     
-    let newX = touch.clientX - trackRect.left - thumbWidth / 2;
+    let newX = clientX - trackRect.left - thumbWidth / 2;
     newX = Math.max(0, Math.min(newX, maxDrag));
     
     setWrittenDragX(newX);
   };
 
-  const handleWrittenTouchEnd = async () => {
+  const handleWrittenPointerUp = async (e) => {
     if (!isDraggingWritten || !writtenTrackRef.current) return;
     
+    // Release capture
+    if (e.currentTarget) {
+        try { e.currentTarget.releasePointerCapture(e.pointerId); } catch(err) {}
+    }
+
     const trackRect = writtenTrackRef.current.getBoundingClientRect();
     const thumbWidth = 60;
     const maxDrag = trackRect.width - thumbWidth;
@@ -164,9 +176,16 @@ function StatusToggle({ gift, onBack, onUpdate }) {
     setWrittenDragX(0);
   };
 
-  // Mobile drag handlers for "Sent"
-  const handleSentTouchStart = (e) => {
+  // --------------------------------------------------------
+  // Mobile POINTER handlers for "Sent" (Fixes Touch Lag)
+  // --------------------------------------------------------
+  const handleSentPointerDown = (e) => {
     if (!isMobile || !isWritten) return;
+    e.preventDefault();
+    
+    // CRITICAL: Lock pointer to element for instant response
+    e.currentTarget.setPointerCapture(e.pointerId);
+
     setIsDraggingSent(true);
     
     if (isSent && sentTrackRef.current) {
@@ -177,23 +196,29 @@ function StatusToggle({ gift, onBack, onUpdate }) {
     }
   };
 
-  const handleSentTouchMove = (e) => {
+  const handleSentPointerMove = (e) => {
     if (!isDraggingSent || !sentTrackRef.current) return;
-    
-    const touch = e.touches[0];
+    e.preventDefault();
+
+    const clientX = e.clientX;
     const trackRect = sentTrackRef.current.getBoundingClientRect();
     const thumbWidth = 60;
     const maxDrag = trackRect.width - thumbWidth;
     
-    let newX = touch.clientX - trackRect.left - thumbWidth / 2;
+    let newX = clientX - trackRect.left - thumbWidth / 2;
     newX = Math.max(0, Math.min(newX, maxDrag));
     
     setSentDragX(newX);
   };
 
-  const handleSentTouchEnd = async () => {
+  const handleSentPointerUp = async (e) => {
     if (!isDraggingSent || !sentTrackRef.current) return;
     
+    // Release capture
+    if (e.currentTarget) {
+        try { e.currentTarget.releasePointerCapture(e.pointerId); } catch(err) {}
+    }
+
     const trackRect = sentTrackRef.current.getBoundingClientRect();
     const thumbWidth = 60;
     const maxDrag = trackRect.width - thumbWidth;
@@ -296,7 +321,6 @@ function StatusToggle({ gift, onBack, onUpdate }) {
         
 
           {/* Written Toggle */}
-          {/* Written Toggle */}
           <div className={`bg-white rounded-2xl p-5 sm:p-6 shadow-md transition-all ${
             isWritten ? 'ring-2 ring-success' : 'border border-gray-200'
           }`}>
@@ -329,9 +353,10 @@ function StatusToggle({ gift, onBack, onUpdate }) {
                   transition: isDraggingWritten ? 'none' : 'background-color 0.3s',
                   touchAction: "none"
                 }}
-                onTouchStart={handleWrittenTouchStart}
-                onTouchMove={handleWrittenTouchMove}
-                onTouchEnd={handleWrittenTouchEnd}
+                onPointerDown={handleWrittenPointerDown}
+                onPointerMove={handleWrittenPointerMove}
+                onPointerUp={handleWrittenPointerUp}
+                onPointerCancel={handleWrittenPointerUp}
               >
                 {isWritten && !isDraggingWritten && (
                   <div className="absolute inset-0 flex items-center pl-6 text-white font-bold text-lg">
@@ -367,7 +392,6 @@ function StatusToggle({ gift, onBack, onUpdate }) {
           </div>
 
           {/* Sent Toggle */}
-          {/* Sent Toggle */}
           <div className={`bg-white rounded-2xl p-5 sm:p-6 shadow-md transition-all ${
             isSent ? 'ring-2 ring-success' : 'border border-gray-200'
           } ${!isWritten ? 'opacity-50' : ''}`}>
@@ -400,9 +424,10 @@ function StatusToggle({ gift, onBack, onUpdate }) {
                   transition: isDraggingSent ? 'none' : 'background-color 0.3s',
                   touchAction: "none"
                 }}
-                onTouchStart={handleSentTouchStart}
-                onTouchMove={handleSentTouchMove}
-                onTouchEnd={handleSentTouchEnd}
+                onPointerDown={handleSentPointerDown}
+                onPointerMove={handleSentPointerMove}
+                onPointerUp={handleSentPointerUp}
+                onPointerCancel={handleSentPointerUp}
               >
                 {isSent && !isDraggingSent && (
                   <div className="absolute inset-0 flex items-center pl-6 text-white font-bold text-lg">
