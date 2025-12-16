@@ -25,6 +25,8 @@ function StatusToggle({ gift, onBack, onUpdate }) {
   const sentTrackRef = useRef(null);
   const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
   // const isMobile=true;
+  const [writtenStartX, setWrittenStartX] = useState(0);
+  const [sentStartX, setSentStartX] = useState(0);
 
   const updateStatus = async (newStatus) => {
     try {
@@ -111,12 +113,16 @@ function StatusToggle({ gift, onBack, onUpdate }) {
     e.currentTarget.setPointerCapture(e.pointerId);
     
     setIsDraggingWritten(true);
+
+    setWrittenStartX(e.clientX);
     
     if (isWritten && writtenTrackRef.current) {
       const trackRect = writtenTrackRef.current.getBoundingClientRect();
       const thumbWidth = 60;
       const maxDrag = trackRect.width - thumbWidth;
       setWrittenDragX(maxDrag);
+    } else if (!isWritten) {
+      setWrittenDragX(0);
     }
   };
 
@@ -130,7 +136,15 @@ function StatusToggle({ gift, onBack, onUpdate }) {
     const thumbWidth = 60;
     const maxDrag = trackRect.width - thumbWidth;
     
-    let newX = clientX - trackRect.left - thumbWidth / 2;
+    let movement = clientX - writtenStartX;
+
+    let newX;
+    if (isWritten) {
+      newX = maxDrag + movement;
+    } else {
+      newX = movement;
+    }
+
     newX = Math.max(0, Math.min(newX, maxDrag));
     
     setWrittenDragX(newX);
