@@ -103,6 +103,7 @@ function StatusToggle({ gift, onBack, onUpdate }) {
   // Mobile drag handlers for "Written"
   const handleWrittenTouchStart = (e) => {
     if (!isMobile) return;
+    e.preventDefault();
     setIsDraggingWritten(true);
     
     if (isWritten && writtenTrackRef.current) {
@@ -115,6 +116,7 @@ function StatusToggle({ gift, onBack, onUpdate }) {
 
   const handleWrittenTouchMove = (e) => {
     if (!isDraggingWritten || !writtenTrackRef.current) return;
+    e.preventDefault();
     
     const touch = e.touches[0];
     const trackRect = writtenTrackRef.current.getBoundingClientRect();
