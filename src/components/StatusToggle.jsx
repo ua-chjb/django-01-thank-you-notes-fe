@@ -291,22 +291,38 @@ function StatusToggle({ gift, onBack, onUpdate }) {
 
         {/* Toggle Cards */}
         <div className="space-y-4 sm:space-y-6">
+        
+
+          {/* Written Toggle */}
           {/* Written Toggle */}
           <div className={`bg-white rounded-2xl p-5 sm:p-6 shadow-md transition-all ${
             isWritten ? 'ring-2 ring-success' : 'border border-gray-200'
           }`}>
-            <div className="flex-1">
-              {!isMobile && (
-                <div className="text-sm text-gray-600">
-                  Toggle to mark as written
+            {!isMobile ? (
+              // Desktop layout
+              <div className="flex items-center justify-between gap-4">
+                <div className="flex-1">
+                  <h1 className="text-xl font-bold text-gray-900 mb-1">Written</h1>
+                  <h2 className="text-sm text-gray-600">Toggle to mark as written</h2>
                 </div>
-              )}
-            </div>
-            
-            {isMobile ? (
+                <button
+                  onClick={handleWrittenToggle}
+                  disabled={isUpdating}
+                  className={`relative w-14 h-8 rounded-full transition-colors flex-shrink-0 ${
+                    isWritten ? 'bg-gradient-to-r from-christmas-light to-christmas-dark' : 'bg-gradient-to-r from-gray-300 to-gray-400'
+                  } ${isUpdating ? 'opacity-60 cursor-not-allowed' : 'cursor-pointer'}`}
+                >
+                  <div className={`absolute top-1 w-6 h-6 bg-white rounded-full shadow-md transition-all ${
+                    isWritten ? 'left-7' : 'left-1'
+                  }`} />
+                </button>
+              </div>
+            ) : (
+              // Mobile layout (draggable slider)
               <div 
                 ref={writtenTrackRef}
-                className={`w-full relative h-16 rounded-full overflow-hidden ${isWritten && !isDraggingWritten ? getBackgroundStyle(0, null, true) : 'bg-gradient-to-r from-gray-300 to-gray-400'}`}                  style={{ 
+                className={`w-full relative h-16 rounded-full overflow-hidden ${isWritten && !isDraggingWritten ? getBackgroundStyle(0, null, true) : 'bg-gradient-to-r from-gray-300 to-gray-400'}`}
+                style={{ 
                   backgroundColor: getBackgroundColor(writtenDragX, writtenTrackRef, isWritten, isDraggingWritten),
                   transition: isDraggingWritten ? 'none' : 'background-color 0.3s'
                 }}
@@ -314,7 +330,6 @@ function StatusToggle({ gift, onBack, onUpdate }) {
                 onTouchMove={handleWrittenTouchMove}
                 onTouchEnd={handleWrittenTouchEnd}
               >
-
                 {isWritten && !isDraggingWritten && (
                   <div className="absolute inset-0 flex items-center pl-6 text-white font-bold text-lg">
                     Written!
@@ -345,34 +360,35 @@ function StatusToggle({ gift, onBack, onUpdate }) {
                   </div>
                 )}
               </div>
-            ) : (
-              <button
-                onClick={handleWrittenToggle}
-                disabled={isUpdating}
-                className={`relative w-14 h-8 rounded-full transition-colors flex-shrink-0 ${
-                  isWritten ? 'bg-gradient-to-r from-christmas-light to-christmas-dark' : 'bg-gradient-to-r from-gray-300 to-gray-400'
-                } ${isUpdating ? 'opacity-60 cursor-not-allowed' : 'cursor-pointer'}`}
-              >
-                <div className={`absolute top-1 w-6 h-6 bg-white rounded-full shadow-md transition-all ${
-                  isWritten ? 'left-7' : 'left-1'
-                }`} />
-              </button>
             )}
           </div>
 
           {/* Sent Toggle */}
+          {/* Sent Toggle */}
           <div className={`bg-white rounded-2xl p-5 sm:p-6 shadow-md transition-all ${
             isSent ? 'ring-2 ring-success' : 'border border-gray-200'
           } ${!isWritten ? 'opacity-50' : ''}`}>
-            <div className="flex-1">
-              {!isMobile && (
-                <div className="text-sm text-gray-600">
-                  Toggle to mark as sent
+            {!isMobile ? (
+              // Desktop layout
+              <div className="flex items-center justify-between gap-4">
+                <div className="flex-1">
+                  <h1 className="text-xl font-bold text-gray-900 mb-1">Sent</h1>
+                  <h2 className="text-sm text-gray-600">Toggle to mark as sent</h2>
                 </div>
-              )}
-            </div>
-            
-            {isMobile ? (
+                <button
+                  onClick={handleSentToggle}
+                  disabled={!isWritten || isUpdating}
+                  className={`relative w-14 h-8 rounded-full transition-colors flex-shrink-0 ${
+                    isSent ? 'bg-gradient-to-r from-christmas-light to-christmas-dark' : 'bg-gradient-to-r from-gray-300 to-gray-400'
+                  } ${isWritten && !isUpdating ? 'cursor-pointer' : 'cursor-not-allowed opacity-60'}`}
+                >
+                  <div className={`absolute top-1 w-6 h-6 bg-white rounded-full shadow-md transition-all ${
+                    isSent ? 'left-7' : 'left-1'
+                  }`} />
+                </button>
+              </div>
+            ) : (
+              // Mobile layout (draggable slider)
               <div 
                 ref={sentTrackRef}
                 className={`w-full relative h-16 rounded-full overflow-hidden ${isSent && !isDraggingSent ? getBackgroundStyle(0, null, true) : 'bg-gradient-to-r from-gray-300 to-gray-400'}`}
@@ -414,21 +430,11 @@ function StatusToggle({ gift, onBack, onUpdate }) {
                   </div>
                 )}
               </div>
-            ) : (
-              <button
-                onClick={handleSentToggle}
-                disabled={!isWritten || isUpdating}
-                className={`relative w-14 h-8 rounded-full transition-colors flex-shrink-0 ${
-                  isSent ? 'bg-gradient-to-r from-christmas-light to-christmas-dark' : 'bg-gradient-to-r from-gray-300 to-gray-400'
-                } ${isWritten && !isUpdating ? 'cursor-pointer' : 'cursor-not-allowed opacity-60'}`}
-              >
-                <div className={`absolute top-1 w-6 h-6 bg-white rounded-full shadow-md transition-all ${
-                  isSent ? 'left-7' : 'left-1'
-                }`} />
-              </button>
             )}
           </div>
         </div>
+
+        
       </div>
     </div>
   );
