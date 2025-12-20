@@ -10,6 +10,7 @@ import AddGift from './components/AddGift';
 import Notifications from './components/Notifications';
 import { getHomeFeed, getCurrentUser, getNotifications } from './utils/api';
 import { HomeIcon, PlusIcon, GiftIcon } from './components/Icons';
+import Snowfall from "react-snowfall";
 
 function App() {
   const [isLoading, setIsLoading] = useState(false);
@@ -203,143 +204,146 @@ function App() {
   }
   // Main app views (when logged in)
   return (
-    <div className="relative">
-      {currentView === 'home' && (
-        <HomeFeed 
-          posts={posts}
-          currentUser={currentUser}
-          onSelectPost={(post) => { setSelectedPost(post); setCurrentView('detail'); }}
-          onNavigate={setCurrentView}
-          onUpdate={loadPosts}
-          onNavigateToUserProfile={handleNavigateToUserProfile}
-        />
-      )}
+    <div>
+      <Snowfall color="#*2C3D9"/>
+      <div className="relative">
+        {currentView === 'home' && (
+          <HomeFeed 
+            posts={posts}
+            currentUser={currentUser}
+            onSelectPost={(post) => { setSelectedPost(post); setCurrentView('detail'); }}
+            onNavigate={setCurrentView}
+            onUpdate={loadPosts}
+            onNavigateToUserProfile={handleNavigateToUserProfile}
+          />
+        )}
 
-      {currentView === 'add' && (
-        <AddGift 
-          onBack={() => setCurrentView('home')}
-          onSuccess={() => {
-            loadPosts();
-            setCurrentView('home');
-          }}
-        />
-      )}
-
-      {currentView === 'profile' && (
-        <Profile 
-          posts={posts}
-          currentUser={currentUser}
-          onLogout={handleLogout}
-          onNavigate={setCurrentView}
-          onSelectPost={(post) => { setSelectedPost(post); setCurrentView('detail'); }}
-          onUserUpdate={loadCurrentUser}
-          onNavigateToUserProfile={handleNavigateToUserProfile}
-        />
-      )}
-
-      {currentView === 'userProfile' && viewingUsername && (
-        <UserProfile 
-          username={viewingUsername}
-          onBack={() => {
-            setViewingUsername(null);
-            setCurrentView('home');
-          }}
-          onSelectPost={(post) => {
-            setSelectedPost(post);
-            setCurrentView('detail');
-          }}
-          onNavigateToUser={(username) => {
-            setViewingUsername(username);
-          }}
-        />
-      )}
-
-      {currentView === 'detail' && (
-        <GiftDetail 
-          gift={selectedPost}
-          currentUser={currentUser}
-          onBack={() => setCurrentView('home')}
-          onStatusClick={() => setCurrentView('status')}
-          onUpdate={loadPosts}
-        />
-      )}
-
-      {currentView === 'status' && (
-        <StatusToggle 
-          gift={selectedPost}
-          onBack={() => setCurrentView('detail')}
-          onUpdate={loadPosts}
-        />
-      )}
-
-	  {currentView == 'notifications' && (
-		<Notifications
-		  onNavigate={setCurrentView}
-		  onSelectPost={async (postPreview) => {
-			const fullPost = posts.find(p => p.id === postPreview.id)
-			if (fullPost) {
-			  setSelectedPost(fullPost);
-			  setCurrentView('detail');
-			} else {
-			  await loadPosts();
-			  const reloadedPost = posts.find(p => p.id === postPreview.id);
-			  if (reloadedPost) {
-				setSelectedPost(reloadedPost);
-				setCurrentView('detail');
-			  }
-			}
-		  }}
-		  onNavigateToUserProfile={handleNavigateToUserProfile}
-		/>
-	  )}
-
-      {/* Bottom Navigation (only show on main views) */}
-      {['home', 'profile', 'userProfile', 'notifications'].includes(currentView) && (
-		<div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-6 py-8 flex justify-around items-center z-50">          <button 
-            onClick={() => setCurrentView('home')}
-            className={`flex flex-col items-center gap-1 transition ${
-              currentView === 'home' ? 'text-blue-600' : 'text-gray-500 hover:text-gray-700'
-            }`}
-          >
-            <HomeIcon size={28} color="currentColor" />
-          </button>
-
-          <button 
-            onClick={() => setCurrentView('add')}
-            className="flex flex-col items-center gap-1 text-gray-500 hover:text-gray-700 transition"
-          >
-            <PlusIcon size={28} color="currentColor" />
-          </button>
-
-          {/* Notifications */}
-          <button 
-            onClick={() => {
-              setCurrentView('notifications');
-              setUnreadNotifications(0);
+        {currentView === 'add' && (
+          <AddGift 
+            onBack={() => setCurrentView('home')}
+            onSuccess={() => {
+              loadPosts();
+              setCurrentView('home');
             }}
-            className={`flex flex-col items-center gap-1 transition relative ${
-              currentView === 'notifications' ? 'text-blue-600' : 'text-gray-500 hover:text-gray-700'
-            }`}
-          >
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
-              <path d="M13.73 21a2 2 0 0 1-3.46 0" />
-            </svg>
-            {unreadNotifications > 0 && (
-              <div className="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full" style={{ backgroundColor: '#FF385C' }} />
-            )}
-          </button>
+          />
+        )}
 
-          <button 
-            onClick={() => setCurrentView('profile')}
-            className={`flex flex-col items-center gap-1 transition ${
-              currentView === 'profile' ? 'text-blue-600' : 'text-gray-500 hover:text-gray-700'
-            }`}
-          >
-            <GiftIcon size={28} color="currentColor" />
-          </button>
-        </div>
+        {currentView === 'profile' && (
+          <Profile 
+            posts={posts}
+            currentUser={currentUser}
+            onLogout={handleLogout}
+            onNavigate={setCurrentView}
+            onSelectPost={(post) => { setSelectedPost(post); setCurrentView('detail'); }}
+            onUserUpdate={loadCurrentUser}
+            onNavigateToUserProfile={handleNavigateToUserProfile}
+          />
+        )}
+
+        {currentView === 'userProfile' && viewingUsername && (
+          <UserProfile 
+            username={viewingUsername}
+            onBack={() => {
+              setViewingUsername(null);
+              setCurrentView('home');
+            }}
+            onSelectPost={(post) => {
+              setSelectedPost(post);
+              setCurrentView('detail');
+            }}
+            onNavigateToUser={(username) => {
+              setViewingUsername(username);
+            }}
+          />
+        )}
+
+        {currentView === 'detail' && (
+          <GiftDetail 
+            gift={selectedPost}
+            currentUser={currentUser}
+            onBack={() => setCurrentView('home')}
+            onStatusClick={() => setCurrentView('status')}
+            onUpdate={loadPosts}
+          />
+        )}
+
+        {currentView === 'status' && (
+          <StatusToggle 
+            gift={selectedPost}
+            onBack={() => setCurrentView('detail')}
+            onUpdate={loadPosts}
+          />
+        )}
+
+      {currentView == 'notifications' && (
+      <Notifications
+        onNavigate={setCurrentView}
+        onSelectPost={async (postPreview) => {
+        const fullPost = posts.find(p => p.id === postPreview.id)
+        if (fullPost) {
+          setSelectedPost(fullPost);
+          setCurrentView('detail');
+        } else {
+          await loadPosts();
+          const reloadedPost = posts.find(p => p.id === postPreview.id);
+          if (reloadedPost) {
+          setSelectedPost(reloadedPost);
+          setCurrentView('detail');
+          }
+        }
+        }}
+        onNavigateToUserProfile={handleNavigateToUserProfile}
+      />
       )}
+
+        {/* Bottom Navigation (only show on main views) */}
+        {['home', 'profile', 'userProfile', 'notifications'].includes(currentView) && (
+      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-6 py-8 flex justify-around items-center z-50">          <button 
+              onClick={() => setCurrentView('home')}
+              className={`flex flex-col items-center gap-1 transition ${
+                currentView === 'home' ? 'text-blue-600' : 'text-gray-500 hover:text-gray-700'
+              }`}
+            >
+              <HomeIcon size={28} color="currentColor" />
+            </button>
+
+            <button 
+              onClick={() => setCurrentView('add')}
+              className="flex flex-col items-center gap-1 text-gray-500 hover:text-gray-700 transition"
+            >
+              <PlusIcon size={28} color="currentColor" />
+            </button>
+
+            {/* Notifications */}
+            <button 
+              onClick={() => {
+                setCurrentView('notifications');
+                setUnreadNotifications(0);
+              }}
+              className={`flex flex-col items-center gap-1 transition relative ${
+                currentView === 'notifications' ? 'text-blue-600' : 'text-gray-500 hover:text-gray-700'
+              }`}
+            >
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+                <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+              </svg>
+              {unreadNotifications > 0 && (
+                <div className="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full" style={{ backgroundColor: '#FF385C' }} />
+              )}
+            </button>
+
+            <button 
+              onClick={() => setCurrentView('profile')}
+              className={`flex flex-col items-center gap-1 transition ${
+                currentView === 'profile' ? 'text-blue-600' : 'text-gray-500 hover:text-gray-700'
+              }`}
+            >
+              <GiftIcon size={28} color="currentColor" />
+            </button>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
