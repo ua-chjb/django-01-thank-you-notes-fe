@@ -205,7 +205,7 @@ function App() {
   // Main app views (when logged in)
   return (
     <div>
-      <Snowfall color="#*2C3D9"/>
+      <Snowfall color="#82C3D9"/>
       <div className="relative">
         {currentView === 'home' && (
           <HomeFeed 
