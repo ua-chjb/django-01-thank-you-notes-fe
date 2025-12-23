@@ -11,6 +11,7 @@ import Notifications from './components/Notifications';
 import { getHomeFeed, getCurrentUser, getNotifications } from './utils/api';
 import { HomeIcon, PlusIcon, GiftIcon } from './components/Icons';
 import Snowfall from "react-snowfall";
+import { trackPageView } from './utils/analytics';
 
 function App() {
   const [isLoading, setIsLoading] = useState(false);
@@ -145,6 +146,10 @@ function App() {
         setIsLoading(false);
       })
   }, []);
+
+  useEffect(() => {
+    trackPageView(currentView);
+  }, [currentView]);
 
   const handleNavigateToUserProfile = (username) => {
     // If viewing own profile, go to the "profile" view instead
