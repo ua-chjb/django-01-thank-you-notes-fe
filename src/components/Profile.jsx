@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
 import { CheckIcon, ArrowIcon, CircleIcon, UserIcon, GiftIcon } from './Icons';
 import { API_URL, S3_BASE_URL } from '../utils/api';
+import { correctImageOrientation } from '../utils/imageUtils';
 
 function Profile({ posts, currentUser, onLogout, onNavigate, onSelectPost, onUserUpdate, onNavigateToUserProfile }) {
   const fileInputRef = useRef(null);
@@ -46,6 +47,8 @@ function Profile({ posts, currentUser, onLogout, onNavigate, onSelectPost, onUse
     setIsUploading(true);
 
     try {
+      const correctedFile = await correctImageOrientation(file);
+
       const formData = new FormData();
       formData.append('profile_picture', file);
 

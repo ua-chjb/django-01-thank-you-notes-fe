@@ -3,6 +3,7 @@ import { BackIcon, CameraIcon, EditIcon, MoreIcon, TrashIcon, CheckIcon, ArrowIc
 import { motion, useMotionValue, useTransform, animate} from 'framer-motion';
 import { updatePost, deletePost, likePost, API_URL, S3_BASE_URL } from '../utils/api';
 import CommentSection from './CommentSection';
+import { correctImageOrientation } from '../utils/imageUtils';
 
 function GiftDetail({ gift, currentUser, onBack, onStatusClick, onUpdate }) {
 
@@ -330,10 +331,11 @@ function GiftDetail({ gift, currentUser, onBack, onStatusClick, onUpdate }) {
 		setPhotoError('');
 		
 		try {
+			const correctedFile = await correctImageOrientation(file);
 			const formData = new FormData();
 			formData.append('what', gift.what);
 			formData.append('who', gift.who);
-			formData.append('gift_image', file);
+			formData.append('gift_image', correctedFile);
 			if (gift.note) formData.append('note', gift.note);
 			if (gift.status) formData.append('status', gift.status);
 

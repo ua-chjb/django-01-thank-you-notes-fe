@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import { CheckIcon, ArrowIcon, CircleIcon, UserIcon } from './Icons';
+import { correctImageOrientation } from '../utils/imageUtils';
 
 function GiftList({ gifts, onSelectGift, onNavigate }) {
 	
